@@ -18,6 +18,7 @@ using namespace std;
 namespace ariel{
 
     void Board::randomTypes(){
+        srand(time(nullptr));
 
         int rnd;
         int x, y, z;
@@ -41,7 +42,7 @@ namespace ariel{
             while(this->tiles[static_cast<size_t>(rnd)].getType() != -1 || this->tiles[static_cast<size_t>(rnd)].getType() == -2){
                 rnd = rand()%NUMBER_OF_TILES;
             }
-            this->tiles[static_cast<size_t>(rnd)].setType(0);
+            this->tiles[static_cast<size_t>(rnd)].setType(5);
             this->tiles[static_cast<size_t>(rnd)].setNumber(0);
             this->tiles[static_cast<size_t>(rnd)].turnOff();
         }
@@ -50,41 +51,41 @@ namespace ariel{
             while(this->tiles[static_cast<size_t>(rnd)].getType() != -1 || this->tiles[static_cast<size_t>(rnd)].getType() == -2){
                 rnd = rand()%NUMBER_OF_TILES;
             }
-            this->tiles[static_cast<size_t>(rnd)].setType(1);
+            this->tiles[static_cast<size_t>(rnd)].setType(0);
         }
         for(int i=0; i<NUMBER_OF_HILLS; i++){
             rnd = rand()%NUMBER_OF_TILES; 
             while(this->tiles[static_cast<size_t>(rnd)].getType() != -1 || this->tiles[static_cast<size_t>(rnd)].getType() == -2){
                 rnd = rand()%NUMBER_OF_TILES;
             }
-            this->tiles[static_cast<size_t>(rnd)].setType(2);
+            this->tiles[static_cast<size_t>(rnd)].setType(1);
         }
         for(int i=0; i<NUMBER_OF_PASTURES; i++){
             rnd = rand()%NUMBER_OF_TILES; 
             while(this->tiles[static_cast<size_t>(rnd)].getType() != -1 || this->tiles[static_cast<size_t>(rnd)].getType() == -2){
                 rnd = rand()%NUMBER_OF_TILES;
             }
-            this->tiles[static_cast<size_t>(rnd)].setType(3);
+            this->tiles[static_cast<size_t>(rnd)].setType(2);
         }
         for(int i=0; i<NUMBER_OF_AGRICULTURALS; i++){
             rnd = rand()%NUMBER_OF_TILES; 
             while(this->tiles[static_cast<size_t>(rnd)].getType() != -1 || this->tiles[static_cast<size_t>(rnd)].getType() == -2){
                 rnd = rand()%NUMBER_OF_TILES;
             }
-            this->tiles[static_cast<size_t>(rnd)].setType(4);
+            this->tiles[static_cast<size_t>(rnd)].setType(3);
         }
         for(int i=0; i<NUMBER_OF_MOUNTAINS; i++){
             rnd = rand()%NUMBER_OF_TILES; 
             while(this->tiles[static_cast<size_t>(rnd)].getType() != -1 || this->tiles[static_cast<size_t>(rnd)].getType() == -2){
                 rnd = rand()%NUMBER_OF_TILES;
             }
-            this->tiles[static_cast<size_t>(rnd)].setType(5);
+            this->tiles[static_cast<size_t>(rnd)].setType(4);
         }
     }
     void Board::randomNumbers(){
 
         int rnd;
-
+        srand(time(nullptr));
         for (int i = 2; i < 13; i++)
         {
             if(i != 7){
@@ -134,7 +135,6 @@ namespace ariel{
 
     }
 
-    
 
     const vector<Tile>& Board::getTiles() const {
         return tiles;

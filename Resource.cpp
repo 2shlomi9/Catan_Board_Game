@@ -14,18 +14,19 @@ namespace ariel{
     string Resource :: getName() const{
 
         switch(this->type){
+
             case 0 :
-                return "no resource";
-            case 1 :
                 return "wood";
-            case 2:
+            case 1:
                 return "brick";
-            case 3:
+            case 2:
                 return "wool";
-            case 4:
+            case 3:
                 return "oats";
-            case 5:
+            case 4:
                 return "iron";
+            case 5 :
+                return "no resource";
             default:
                 return "undefind";
         }

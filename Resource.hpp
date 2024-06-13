@@ -7,14 +7,14 @@ using namespace std;
 
 namespace ariel{
     
-    class Resource : public Card{
+    class Resource{
 
         private:
             int type;
 
         public:
-            Resource(const int type) : Card(), type(type){}
-            Resource() : Card(), type(-1){}
+            Resource(const int type) : type(type){}
+            Resource() : type(-1){}
 
             int getType() const;
 

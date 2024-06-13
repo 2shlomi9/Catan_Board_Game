@@ -44,22 +44,22 @@ namespace ariel{
         switch(this->type){
         case -2:
             return "Sea";
-        case 0:
-            return "Desert";
-        case 1 :
+        case 0 :
             return "Forest";
-        case 2:
+        case 1:
             return "Hills";
-        case 3:
+        case 2:
             return "Pasture Land";
-        case 4:
+        case 3:
             return "Agricultural Land";
-        case 5:
+        case 4:
             return "Mountains";
+        case 5:
+            return "Desert";
         default:
             return "undefined";
+        }
     }
-}
 
     vector<int> Tile::getPosition() const{
         return this->position;
