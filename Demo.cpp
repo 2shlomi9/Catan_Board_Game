@@ -12,8 +12,7 @@
 using namespace std;
 using namespace ariel;
 
-int main()
-{
+int main(){
 
     Board board; // get the board of the game.
     board.initializeBoard();
