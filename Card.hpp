@@ -7,7 +7,6 @@ using namespace std;
 
 namespace ariel{
     class Card {
-
         private:
             int color;
         public:

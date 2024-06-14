@@ -37,6 +37,7 @@ bool Player::buySettlment(){
     this->resources[1]--;
     this->resources[2]--;
     this->resources[3]--;
+    this->points++;
     return true;
 }
 bool Player::buyCity(){
@@ -51,6 +52,7 @@ bool Player::buyCity(){
         }
         return false;
     }
+    this->points++;
     this->resources[3]-=2;
     this->resources[4]-=3;
     return true;
@@ -82,10 +84,19 @@ int Player::rollDice() const{
     return(diceA+diceB);
 }
 
+void Player::setPath(Path path){
+    this->paths.push_back(path);
+}
+void Player::setSettlment(Settlment settlment){
+    this->settlments.push_back(settlment);
+}
+
 void Player::changeName(string name){
     this->name = name;
 }
-
+string Player::getName() const{
+    return this->name;
+}
 void Player::addResource(const int resource){
     if(resource < 0 || resource > 4){
         try {
@@ -97,7 +108,7 @@ void Player::addResource(const int resource){
         }
         return;
     }
-    this->resources[resource]++;
+    this->resources[static_cast<size_t>(resource)]++;
 }
 
 void Player::getLargestArmy(){
@@ -125,3 +136,9 @@ void Player::loseLongestPath(){
     }
 }
 
+vector<Path> Player::getPaths() const{
+    return this->paths;
+}
+vector<Settlment> Player::getSettlments() const{
+    return this->settlments;
+}

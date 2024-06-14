@@ -15,13 +15,14 @@ namespace ariel{
 
             const std::vector<Tile>& getTiles() const;
             void initializeBoard();
+            void clearBoard();
             void randomTypes();
             void randomNumbers();
             string toString() const;
             int getThiefPosition() const;
             void moveThief(const int position);
-            bool isTilesNeighbors(const int t1,const int t2);
-            bool isTilesNeighbors(const int t1,const int t2,const int t3);
+            bool isTwoTilesNeighbors(const int t1,const int t2) const;
+            bool isThreeTilesNeighbors(const int t1,const int t2,const int t3) const;
 
     };
 }

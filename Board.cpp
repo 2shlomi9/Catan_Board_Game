@@ -106,7 +106,7 @@ void Board::randomNumbers(){
 }
 
 void Board::initializeBoard() {
-    
+    this->clearBoard();
     for(int i=0; i<4; i++){
         this->tiles.push_back(Tile(i,-3,3-i)); 
     }  
@@ -147,22 +147,20 @@ int Board::getThiefPosition() const{
 }
 void Board::moveThief(const int position){
 if (this->tiles[static_cast<size_t>(position)].getType() == -2) {
-try {
-    throw std::invalid_argument("Can't move the thief to the sea!");
-} catch (const std::invalid_argument& e) {
-    // Handle the error here, e.g., print a message or log the error
-    std::cerr << "Error: " << e.what() << std::endl;
-    // Optionally, you can set a flag or take other recovery actions
-}
-    // Program execution continues here
-    return; // Still return after handling the error
+    try {
+        throw std::invalid_argument("Can't move the thief to the sea!");
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+    return; 
 }
 
     this->tiles[static_cast<size_t>(this->getThiefPosition())].turnOn();
     this->tiles[static_cast<size_t>(position)].turnOff();
 }
 
-bool Board::isTilesNeighbors(const int t1,const int t2){
+bool Board::isTwoTilesNeighbors(const int t1,const int t2) const{
     int x1,y1,z1;
     int x2,y2,z2;
     x1 = this->tiles[static_cast<size_t>(t1)].getPosition()[0];
@@ -182,20 +180,20 @@ bool Board::isTilesNeighbors(const int t1,const int t2){
         if(abs(x1-x2) == 1 && abs(y1-y2) == 1) return true;
     }
     return false;
-
 }
-bool Board::isTilesNeighbors(const int t1,const int t2,const int t3){
-    if(this->isTilesNeighbors(t1,t2) && this->isTilesNeighbors(t2,t3) && this->isTilesNeighbors(t1,t3)){
+bool Board::isThreeTilesNeighbors(const int t1,const int t2,const int t3) const{
+    if(this->isTwoTilesNeighbors(t1,t2) && this->isTwoTilesNeighbors(t2,t3) && this->isTwoTilesNeighbors(t1,t3)){
         return true;
     }
     return false;
 }
 
+
 string Board::toString()const{
     string str = "The board :\n";
 
     for(size_t i=0; i<NUMBER_OF_TILES; i++){
-        str += this->tiles[i].toString() + " ";
+        str += "id: " + to_string(i) +" "+ this->tiles[i].toString() + " ";
         if(i == 3 || i == 8 || i == 14 || i == 21 || i == 27 || i == 32){
             str += "\n";
         }
@@ -205,6 +203,10 @@ string Board::toString()const{
     return str;
     
 }
+void Board::clearBoard(){
+    this->tiles.clear();
+}
+
 
 
        
