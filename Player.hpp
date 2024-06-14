@@ -6,9 +6,6 @@
 
 using namespace std;
 using namespace ariel;
-
-
-
 class Player{
     private:
 
@@ -25,8 +22,15 @@ class Player{
         Player() : name("Player"), points(0), isLargestArmy(false),  isLongestPath(false){}
         void changeName(const string name);
         int rollDice() const;
-        void addResource(const Resource resource);
-        bool buildSettlment();
-        bool buildPath();
+        void addResource(const int resource);
+        bool buyPath();
+        bool buySettlment();
+        bool buyCity();
+        bool buyDevelopmentCard();
+        void getLargestArmy();
+        void loseLargestArmy();
+        void getLongestPath();
+        void loseLongestPath();
+        // bool trade(vector<size_t> request, vector<size_t> receive);
             
 };
