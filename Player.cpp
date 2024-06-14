@@ -89,6 +89,7 @@ void Player::setPath(Path path){
 }
 void Player::setSettlment(Settlment settlment){
     this->settlments.push_back(settlment);
+    this->points++;
 }
 
 void Player::changeName(string name){
@@ -98,7 +99,7 @@ string Player::getName() const{
     return this->name;
 }
 void Player::addResource(const int resource){
-    if(resource < 0 || resource > 4){
+    if((resource < 0 || resource > 5 ) && resource != -2){
         try {
             throw std::invalid_argument("Inviled Argument for resource type");
         } catch (const std::invalid_argument& e) {
@@ -108,7 +109,40 @@ void Player::addResource(const int resource){
         }
         return;
     }
-    this->resources[static_cast<size_t>(resource)]++;
+    if(resource >= 0 && resource < 5){
+        this->resources[static_cast<size_t>(resource)]++;
+    }
+}
+bool Player::upgrateToCity(int settlment){
+    if(this->settlments.size()-1 < settlment || settlment < 0){
+        try
+        {
+            throw std::invalid_argument("Inviled argument\n");
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        return false;
+
+    }
+    if(this->settlments[static_cast<size_t>(settlment)].getIsCity()){
+        try
+        {
+            throw std::invalid_argument("This settlment is already a city\n");
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        return false;
+    }
+    if(this->buyCity()){
+        this->settlments[static_cast<size_t>(settlment)].upgrateToCity();
+        return true;
+    }
+    return false;
+
 }
 
 void Player::getLargestArmy(){
@@ -141,4 +175,38 @@ vector<Path> Player::getPaths() const{
 }
 vector<Settlment> Player::getSettlments() const{
     return this->settlments;
+}
+
+
+string Player::toString() const{
+    string str = "Player " + this->name + " :\n";
+    str += "Resources :\n";
+    for (size_t i = 0; i < this->resources.size(); i++)
+    {
+        Resource resource(i);
+        str += resource.getName() + " : " + to_string(this->resources[i]) + "\n";
+    }
+    str += "Settlments :\n";
+    for (size_t i = 0; i < this->settlments.size(); i++)
+    {   
+        if(!this->settlments[i].getIsCity()){
+            str += to_string(i+1) + ": " + this->settlments[i].toString() + "\n";
+        }
+    }
+    str += "Cities :\n";
+    for (size_t i = 0; i < this->settlments.size(); i++)
+    {
+        if(this->settlments[i].getIsCity()){    
+            str += to_string(i+1) + ": " + this->settlments[i].toString() + "\n";
+        }
+    }
+    str += "Paths :\n";
+    for (size_t i = 0; i < this->paths.size(); i++)
+    {
+        str += to_string(i+1) + " : " + this->paths[i].toString() + "\n";
+    }
+    str += "Player points : " + to_string(this->points) + "\n";
+    
+    return str;
+    
 }

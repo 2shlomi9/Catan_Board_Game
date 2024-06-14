@@ -25,12 +25,14 @@ namespace ariel{
             void changeName(const string name);
             string getName() const;
             int rollDice() const;
+            string toString() const;
             void addResource(const int resource);
             void setPath(Path path);
             void setSettlment(Settlment settlment);
             bool buyPath();
             bool buySettlment();
             bool buyCity();
+            bool upgrateToCity(int settlment);
             bool buyDevelopmentCard();
             void getLargestArmy();
             void loseLargestArmy();

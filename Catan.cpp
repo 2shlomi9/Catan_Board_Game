@@ -55,51 +55,26 @@ bool Catan::addPlayer(Player player){
     return true;
 }
 
-void Catan::startGame(){
-    cout<<"Game has started !"<<endl;
-    this->isAlive = true;
-
-    setPlayersOrder();
-    cout<<"\nGame players order :"<<endl;
-    for(size_t i =0; i<this->players.size();i++){
-        cout<<this->players[i].getName()<<endl;
-    }
-    char accpetBoard = 'N';
-    cout<<"\nRandoming the board game"<< endl;
-    this->board.initializeBoard();
-    cout<<this->board.toString();
 
 
-    cout<<"\nAccept the board ? (Y/N)"<< endl;
-    cin >> accpetBoard ;
-
-    while(accpetBoard != 'Y'){
-        cout<<"\nRandoming the board game"<<endl;
-        this->board.initializeBoard();
-        cout<<this->board.toString();
-        cout<<"\nAccept the board ? (Y/N)"<<endl;
-        cin >> accpetBoard ;
-    }
-    
-}
-
-void Catan::addPath(int player, Path path){
+bool Catan::addPath(int player, Path path){
     vector<int> tiles = path.getTiles(); 
     if(!this->isAvaliableForPath(tiles[0], tiles[1])){
-        return;
+        return false;
     }
     this->players[static_cast<size_t>(player)].setPath(path);
     cout<<this->players[static_cast<size_t>(player)].getName() + " set path successfully !" <<endl;
-
+    return true;
 }
-void Catan::addSettlment(int player, Settlment settlment){
+
+bool Catan::addSettlment(int player, Settlment settlment){
     vector<int> tiles = settlment.getTiles(); 
     if(!this->isAvaliableForSettlment(tiles[0], tiles[1], tiles[2])){
-        return;
+        return false;
     }
     this->players[static_cast<size_t>(player)].setSettlment(settlment);
     cout<<this->players[static_cast<size_t>(player)].getName() + " set settlment successfully !" <<endl;
-
+    return true;
 }
 void Catan::setPlayersOrder(){
     srand(time(nullptr));
@@ -258,9 +233,103 @@ bool Catan::isAvaliableForSettlment(const int t1,const int t2,const int t3) cons
     return true;
 }
 
-// bool Catan::isAvaliableForPath(const int t1,const int t2) const{
+bool Catan::isPathConnectToSettlment(Path path, Settlment settlment) const{
+    int t1 = settlment.getTiles()[0];
+    int t2 = settlment.getTiles()[1];
+    int t3 = settlment.getTiles()[2];
+    int p1 = path.getTiles()[0];
+    int p2 = path.getTiles()[1];
+    bool flag = compareTwoTiles(t1,t2,t3,p1,p2,-1);
+    if(flag == false){
+        try
+        {
+            throw std::invalid_argument("There isn't a settlment to connect to this path\n");
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+        return false;
+        
+    }
 
-// }
-// bool Catan::isAvaliableForSettlment(const int t1,const int t2,const int t3) const{
+    return true;
+}
 
-// }
+void Catan::startGame(){
+    cout<<"Game has started !"<<endl;
+    this->isAlive = true;
+
+    setPlayersOrder();
+    cout<<"\nGame players order :"<<endl;
+    for(size_t i =0; i<this->players.size();i++){
+        cout<<this->players[i].getName()<<endl;
+    }
+    char accpetBoard = 'N';
+    cout<<"\nRandoming the board game"<< endl;
+    this->board.initializeBoard();
+    cout<<this->board.toString();
+
+
+    cout<<"\nAccept the board ? (Y/N)"<< endl;
+    cin >> accpetBoard ;
+
+    while(accpetBoard != 'Y'){
+        cout<<"\nRandoming the board game"<<endl;
+        this->board.initializeBoard();
+        cout<<this->board.toString();
+        cout<<"\nAccept the board ? (Y/N)"<<endl;
+        cin >> accpetBoard ;
+    }
+
+    int t1, t2, t3;
+    int p1, p2;
+    bool flag = false;
+    bool isConnected = false;
+    
+    for(int i = 0; i<this->players.size(); i++){
+        while(!flag){
+            cout<<"Player "+this->players[static_cast<size_t>(i)].getName() + ": locate the first settlment (choose 3 tiles by id)"<<endl;
+            cin>>t1>>t2>>t3;
+            Settlment settlment(t1,t2,t3);
+            flag = this->addSettlment(i,settlment);
+        }
+        flag = false;
+        while(!flag || !isConnected){
+            cout<<"Player "+this->players[static_cast<size_t>(i)].getName() + ": locate the first path (choose 2 tiles by id)"<<endl;
+            cin>>p1>>p2;
+            Path path(p1,p2);
+            Settlment settlment(t1,t2,t3);
+            isConnected = this->isPathConnectToSettlment(path,settlment);
+            if(isConnected){
+                flag = this->addPath(i,path);
+            }
+        }
+        flag = false;
+        isConnected = false;
+    }
+    for(int i = this->players.size()-1; i >= 0; i--){
+        while(!flag){
+            cout<<"Player "+this->players[static_cast<size_t>(i)].getName() + ": locate the second settlment (choose 3 tiles by id)"<<endl;
+            cin>>t1>>t2>>t3;
+            Settlment settlment(t1,t2,t3);
+            flag = this->addSettlment(i,settlment);
+        }
+        while(!flag || !isConnected){
+            cout<<"Player "+this->players[static_cast<size_t>(i)].getName() + ": locate the first path (choose 2 tiles by id)"<<endl;
+            cin>>p1>>p2;
+            Path path(p1,p2);
+            Settlment settlment(t1,t2,t3);
+            isConnected = this->isPathConnectToSettlment(path,settlment);
+            if(isConnected){
+                flag = this->addPath(i,path);
+            }
+        }
+        this->players[static_cast<size_t>(i)].addResource(this->board.getTiles()[static_cast<size_t>(t1)].getType());
+        this->players[static_cast<size_t>(i)].addResource(this->board.getTiles()[static_cast<size_t>(t2)].getType());
+        this->players[static_cast<size_t>(i)].addResource(this->board.getTiles()[static_cast<size_t>(t3)].getType());
+        cout<<this->players[static_cast<size_t>(i)].toString();
+
+        flag = false;
+        isConnected = false;
+    }
+    
+}

@@ -15,6 +15,7 @@ namespace ariel{
             Tool(const int points, const vector<int> tiles) : points(points), tiles(tiles){}
             const int getPoints();
             vector<int> getTiles() const; 
+            string toString() const;
 
     };
     class Path : public Tool{
@@ -25,15 +26,12 @@ namespace ariel{
     };
     class Settlment : public Tool{
         private:
+            bool isCity;
             
         public:
-            Settlment(const int t1, const int t2, const int t3) : Tool(1,{t1,t2,t3}){} 
-    };
-    class City : public Tool{
-        private:
-            vector<int>tiles;
-        public:
-            City(const int t1, const int t2, const int t3) : Tool(2,{t1,t2,t3}){} 
+            Settlment(const int t1, const int t2, const int t3) : Tool(1,{t1,t2,t3}), isCity(false){} 
+            void upgrateToCity();
+            bool getIsCity()const;
     };
 
     
