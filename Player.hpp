@@ -16,6 +16,7 @@ namespace ariel{
             bool isLongestPath;
             vector<Path> paths;
             vector<Settlment> settlments;
+            vector<Settlment> cities;
             vector<Card> card;
             vector<int> resources;
             vector<Tile> tiles;
@@ -26,13 +27,17 @@ namespace ariel{
             string getName() const;
             int rollDice() const;
             string toString() const;
+            string getTools()const;
+            string viewSettlment();
+            int getPoints()const;
             void addResource(const int resource);
             void setPath(Path path);
             void setSettlment(Settlment settlment);
             bool buyPath();
             bool buySettlment();
             bool buyCity();
-            bool upgrateToCity(int settlment);
+            bool upgrateToCity(int settlment);    
+            
             bool buyDevelopmentCard();
             void getLargestArmy();
             void loseLargestArmy();

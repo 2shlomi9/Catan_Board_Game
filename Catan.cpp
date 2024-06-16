@@ -7,7 +7,7 @@ using namespace ariel;
 
 bool Catan::addPlayer(Player player){
     
-    if (isAlive)
+    if (this->isAlive)
     {
         try
         {
@@ -64,6 +64,7 @@ bool Catan::addPath(int player, Path path){
     }
     this->players[static_cast<size_t>(player)].setPath(path);
     cout<<this->players[static_cast<size_t>(player)].getName() + " set path successfully !" <<endl;
+    setPlayerLongestPath();
     return true;
 }
 
@@ -239,19 +240,16 @@ bool Catan::isPathConnectToSettlment(Path path, Settlment settlment) const{
     int t3 = settlment.getTiles()[2];
     int p1 = path.getTiles()[0];
     int p2 = path.getTiles()[1];
-    bool flag = compareTwoTiles(t1,t2,t3,p1,p2,-1);
-    if(flag == false){
-        try
-        {
-            throw std::invalid_argument("There isn't a settlment to connect to this path\n");
-        } catch (const std::invalid_argument& e) {
-            std::cerr << "Error: " << e.what() << std::endl;
-        }
-        return false;
-        
-    }
-
-    return true;
+    return compareTwoTiles(t1,t2,t3,p1,p2,-1);
+    
+}
+bool Catan::isPathConnectToPath(Path path1, Path path2) const{
+    int t1 = path1.getTiles()[0];
+    int t2 = path1.getTiles()[1];
+    int p1 = path2.getTiles()[0];
+    int p2 = path2.getTiles()[1];
+    return compareTwoTiles(t1,t2,-1,p1,p2,-1);
+    
 }
 
 void Catan::startGame(){
@@ -302,6 +300,14 @@ void Catan::startGame(){
             if(isConnected){
                 flag = this->addPath(i,path);
             }
+            else{
+                try
+                {
+                    throw std::invalid_argument("There isn't a settlment to connect to this path\n");
+                } catch (const std::invalid_argument& e) {
+                    std::cerr << "Error: " << e.what() << std::endl;
+                }
+            }
         }
         flag = false;
         isConnected = false;
@@ -322,6 +328,14 @@ void Catan::startGame(){
             if(isConnected){
                 flag = this->addPath(i,path);
             }
+            else{
+                try
+                {
+                    throw std::invalid_argument("There isn't a settlment to connect to this path\n");
+                } catch (const std::invalid_argument& e) {
+                    std::cerr << "Error: " << e.what() << std::endl;
+                }
+            }
         }
         this->players[static_cast<size_t>(i)].addResource(this->board.getTiles()[static_cast<size_t>(t1)].getType());
         this->players[static_cast<size_t>(i)].addResource(this->board.getTiles()[static_cast<size_t>(t2)].getType());
@@ -331,5 +345,248 @@ void Catan::startGame(){
         flag = false;
         isConnected = false;
     }
+}
+string Catan::getAllTools()const{
+    string str = "Tools on the board:\n";
+    for (size_t i = 0; i < this->players.size(); i++)
+    {
+        str+=this->players[i].getTools()+"\n";
+    }
+    return str;
+}
+int Catan::findLongestPath(size_t player) const{
+
+    if (this->players[player].getPaths().empty()) {
+        return 0;
+    }
+
+    size_t n = this->players[player].getPaths().size();
+    std::vector<int> dp(n, 1);  
+
+    int maxLength = 1;
+
+    // Build the dp array
+    for (size_t i = 1; i < n; ++i) {
+        for (size_t j = 0; j < i; ++j) {
+            if (isPathConnectToPath(this->players[player].getPaths()[j], this->players[player].getPaths()[i])) {
+                dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+        maxLength = max(maxLength, dp[i]);
+    }
+
+    return maxLength;
+}
+void Catan::setPlayerLongestPath(){
+    int max = this->longestPath;
+    int index = this->playerLongestPath;
+    for(size_t i=0; i<this->players.size(); i++){
+        int longestPath = findLongestPath(i);
+        if(longestPath > max && longestPath > 5){
+            max = longestPath;
+            index = i;
+        }
+    }
+    if(index != this->playerLongestPath && index != -1){
+        if(this->playerLongestPath == -1){
+            this->players[static_cast<size_t>(index)].getLongestPath();
+            cout<<this->players[static_cast<size_t>(index)].getName() + " got longest path !"<<endl;
+        }
+        else{
+            this->players[static_cast<size_t>(index)].getLongestPath();
+            cout<<this->players[static_cast<size_t>(index)].getName() + " got longest path !"<<endl;
+            this->players[static_cast<size_t>(this->playerLongestPath)].loseLongestPath();
+            cout<<this->players[static_cast<size_t>(index)].getName() + " loose longest path !"<<endl;
+        }
+    }
+    this->playerLongestPath = index;
+}
+
+int Catan::rollMenu(size_t player) const{
     
+    int choose = -1;
+    int dice;
+    
+    
+    while(1){
+        cout<<this->players[player].getName() + " turn: "<<endl;
+        cout<< "Menu:" <<endl; 
+        cout<<"View the board-press 1"<<endl;
+        cout<<"View your game data-press 2"<<endl;
+        cout<<"Roll Dices-press 3"<<endl;
+        cin>>choose;
+        switch (choose)
+        {
+
+        case 1:
+            cout<<this->board.toString()<<endl;
+            cout<<this->getAllTools();
+            break;
+        case 2 :
+            cout<<this->players[player].toString();
+            break;
+        case 3:
+            dice = this->players[player].rollDice();
+            cout<<"Dices result: "+to_string(dice)<<endl;
+            return dice;            
+        default:
+            cout<<"press number between 1 to 3"<<endl;
+            break;
+        }
+    }
+    return -1;
+
+}
+
+size_t Catan::actionMenu(size_t player) {
+    int choose = -1; 
+    while(choose != 6){
+        cout<<this->players[player].getName() + " turn: "<<endl;
+        cout<< "Menu:" <<endl; 
+        cout<<"View the board-press 1"<<endl;
+        cout<<"View your game data-press 2"<<endl;
+        cout<<"Build path-press 3"<<endl;
+        cout<<"Build settlement-press 4"<<endl;
+        cout<<"Build City-press 5"<<endl;
+        cout<<"Buy Development card-press 6"<<endl;
+        cout<<"Trade-press 7"<<endl;
+        cout<<"Finish turn-press 8"<<endl;
+        cin>>choose; 
+        if(choose == 1){
+            cout<<this->board.toString()<<endl;
+            cout<<this->getAllTools();
+        }
+        else if(choose == 2){
+            cout<<this->players[player].toString();
+        }
+        else if(choose== 3){
+            cout<<"choose where to build the path:(choose 2 tiles)"<<endl;
+            int p1, p2;
+            cin>>p1>>p2;
+            Path path(p1,p2);
+            bool flag = false;
+            for(size_t i = 0; i< this->players[player].getSettlments().size(); i++){
+                if(isPathConnectToSettlment(path,this->players[player].getSettlments()[i])){
+                    this->addPath(static_cast<int>(player),path);
+                    flag = true;
+                    break;
+                }
+            } 
+            if(!flag){
+                for(size_t i = 0; i< this->players[player].getPaths().size(); i++){
+                    if(isPathConnectToPath(this->players[player].getPaths()[i],path)){
+                        this->addPath(static_cast<int>(player),path);
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+
+            if(!flag){
+                try
+                {
+                    throw std::invalid_argument("There isn't a settlment or path to connect to this path\n");
+                } catch (const std::invalid_argument& e) {
+                    std::cerr << "Error: " << e.what() << std::endl;
+                }            
+            }
+
+        }  
+        else if(choose == 4){
+            cout<<"choose where to build the settlement:(choose 3 tiles)"<<endl;
+            int t1, t2,t3;
+            cin>>t1 >>t2>>t3;
+            Settlment settlment(t1,t2,t3);
+            bool flag = false;
+            for(size_t i = 0; i< this->players[player].getPaths().size(); i++){
+                if(isPathConnectToSettlment(this->players[player].getPaths()[i],settlment)){
+                    this->addSettlment(static_cast<int>(player),settlment);
+                    flag = true;
+                    break;
+                }
+            } 
+            if(!flag){
+                try
+                {
+                    throw std::invalid_argument("There isn't a settlment or path to connect to this path\n");
+                } catch (const std::invalid_argument& e) {
+                    std::cerr << "Error: " << e.what() << std::endl;
+                }  
+            }
+        }
+        else if(choose == 5){
+            cout<<"Choose settlment you want upgrate to city (by index)"<<endl;
+            cout<<this->players[player].viewSettlment()<<endl;
+            int choose;
+            int settlmentIndex = 0;
+            cin>>choose;
+            for (size_t i = 0; i < this->players[player].getSettlments().size(); i++)
+            {
+                settlmentIndex++;
+                if(!this->players[player].getSettlments()[i].getIsCity()){
+                    if(--choose == 0){
+                        break;
+                    }
+                }
+            }
+            
+            this->players[player].upgrateToCity(settlmentIndex-1);
+        }
+        else if(choose == 6){
+
+        }
+        else if(choose == 7){
+            
+        }
+        else if(choose == 8){
+            return 0;
+        }
+        else{
+            cout<<"Choose number between 1 to 6 !"<<endl;
+        }
+        //player victory
+        if(this->players[player].getPoints()>=10){
+            return player+1; 
+        }
+    }
+    return 0;
+
+}
+void Catan::getResource(const int diceNumber){
+
+    for (size_t i = 0; i < this->players.size(); i++){
+        for (size_t j = 0; j < this->players[i].getSettlments().size(); j++)
+        {
+            for (size_t k = 0; k < 3; k++)
+            {
+                size_t tileNumber = static_cast<size_t>(this->players[i].getSettlments()[j].getTiles()[k]);
+                if(this->board.getTiles()[tileNumber].getNumber() == diceNumber){
+                    this->players[i].addResource(this->board.getTiles()[tileNumber].createResource().getType());
+                    if(this->players[i].getSettlments()[j].getIsCity()){
+                        this->players[i].addResource(this->board.getTiles()[tileNumber].createResource().getType());
+                    }
+                }
+            }
+                
+        }
+                
+    }
+}
+
+void Catan::playGame(){
+    size_t victory = 0;
+    while(victory == 0){
+        int rollDices;
+        for (size_t i = 0; i < this->players.size(); i++)
+        {
+            rollDices = rollMenu(i);
+            getResource(rollDices);
+            victory = actionMenu(i);
+            if(victory > 0) {
+                break;
+            }
+            
+        }
+    }
+    cout<<"Player "+this->players[victory-1].getName()+" has won !!!!!"<<endl;
 }

@@ -15,12 +15,530 @@ int main(){
     Player p2("sali");
     Player p3("Bibi");
     Player p4("yair");
+    p1.addResource(0);
+    p1.addResource(0);
+    p1.addResource(0);
+    p1.addResource(0);
+    p1.addResource(0);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+     p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+    p1.addResource(1);
+
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+    p1.addResource(2);
+
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+    p1.addResource(3);
+
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+    p1.addResource(4);
+
+     p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(0);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+    p2.addResource(1);
+
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+    p2.addResource(2);
+
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+    p2.addResource(3);
+
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
+    p2.addResource(4);
     Catan catan;
     catan.addPlayer(p1);
     catan.addPlayer(p2);
-   // catan.startGame();
+    catan.startGame();
+    catan.playGame();
+
+/*/
+set:
+0 1 5
+0 4 5
+4 5 10
+5 10 11
+10 11 17
+11 17 18
+
+path:
+0 5
+4 5
+5 10
+10 11
+11 17
+18 24
 
 
+set:
+
+
+2:(31, 32, 26)
+3:(31, 25, 30)
+4:(25, 19, 26)
+5:(29, 30, 34)
+5:(23, 24, 29)
+
+Paths :
+1:(31, 26)
+2:(31, 25)
+3:(25, 30)
+4:(24, 25)
+5:(34, 30)
+6:(25, 19)
+7:(18, 19)
+8:(12, 19)
+9:(29, 34)
+10:(24, 29)
+11:(23, 24)
+12:(23, 29)
+
+*/
 
     // catan.addPath(0,path1);
     // cout<<"(5,1)"<<endl;
@@ -34,29 +552,29 @@ int main(){
     // catan.addPath(1,path1);
     // catan.addPath(1,path2);
     // Player p5("EladHOREV");
-    Path path1(11,5);
-    Path path2(5,10);
-    Path path3(10,11);
-    Path path4(10,12);
-    Path path5(10,9);
-    Settlment settlment(5,11,10);
-    cout<<catan.isPathConnectToSettlment(path1,settlment)<<endl;
-    cout<<catan.isPathConnectToSettlment(path2,settlment)<<endl;
-    cout<<catan.isPathConnectToSettlment(path3,settlment)<<endl;
-    cout<<catan.isPathConnectToSettlment(path4,settlment)<<endl;
-    cout<<catan.isPathConnectToSettlment(path5,settlment)<<endl;
-    p1.setSettlment(settlment);
-    p1.addResource(3);
-    p1.addResource(3);
-    p1.upgrateToCity(1);
-    p1.upgrateToCity(0);
-     cout<<p1.toString();
-    p1.addResource(4);
-    p1.addResource(4);
-    p1.addResource(4);
-    p1.upgrateToCity(0);
-     cout<<p1.toString();
-    p1.upgrateToCity(0);
+    // Path path1(11,5);
+    // Path path2(5,10);
+    // Path path3(10,11);
+    // Path path4(10,12);
+    // Path path5(10,9);
+    // Settlment settlment(5,11,10);
+    // cout<<catan.isPathConnectToSettlment(path1,settlment)<<endl;
+    // cout<<catan.isPathConnectToSettlment(path2,settlment)<<endl;
+    // cout<<catan.isPathConnectToSettlment(path3,settlment)<<endl;
+    // cout<<catan.isPathConnectToSettlment(path4,settlment)<<endl;
+    // cout<<catan.isPathConnectToSettlment(path5,settlment)<<endl;
+    // p1.setSettlment(settlment);
+    // p1.addResource(3);
+    // p1.addResource(3);
+    // p1.upgrateToCity(1);
+    // p1.upgrateToCity(0);
+    //  cout<<p1.toString();
+    // p1.addResource(4);
+    // p1.addResource(4);
+    // p1.addResource(4);
+    // p1.upgrateToCity(0);
+    //  cout<<p1.toString();
+    // p1.upgrateToCity(0);
 
     
 

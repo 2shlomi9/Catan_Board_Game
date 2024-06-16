@@ -40,6 +40,9 @@ bool Player::buySettlment(){
     this->points++;
     return true;
 }
+int Player::getPoints()const{
+    return this->points;
+}
 bool Player::buyCity(){
     // 2:Oats-3, 3:Iron-4 needed
     if(this->resources[3] < 2 || this->resources[4] < 3){
@@ -76,12 +79,8 @@ bool Player::buyDevelopmentCard(){
 }
 int Player::rollDice() const{
     srand(time(nullptr));
-
-    int diceA;
-    int diceB;
-    diceA = rand() % 6 + 1;
-    diceB = rand() % 6 + 1;
-    return(diceA+diceB);
+    return rand() % 11 + 2;
+   
 }
 
 void Player::setPath(Path path){
@@ -99,16 +98,7 @@ string Player::getName() const{
     return this->name;
 }
 void Player::addResource(const int resource){
-    if((resource < 0 || resource > 5 ) && resource != -2){
-        try {
-            throw std::invalid_argument("Inviled Argument for resource type");
-        } catch (const std::invalid_argument& e) {
-            // Handle the error here, e.g., print a message or log the error
-            std::cerr << "Error: " << e.what() << std::endl;
-            // Optionally, you can set a flag or take other recovery actions
-        }
-        return;
-    }
+
     if(resource >= 0 && resource < 5){
         this->resources[static_cast<size_t>(resource)]++;
     }
@@ -147,25 +137,25 @@ bool Player::upgrateToCity(int settlment){
 
 void Player::getLargestArmy(){
     if(!this->isLargestArmy){
-        this->isLargestArmy == true;
+        this->isLargestArmy = true;
         this->points += 2;
     }
 }
 void Player::loseLargestArmy(){
     if(this->isLargestArmy){
-        this->isLargestArmy == false;
+        this->isLargestArmy = false;
         this->points -= 2;
     }
 }
 void Player::getLongestPath(){
     if(!this->isLongestPath){
-        this->isLongestPath == true;
+        this->isLongestPath = true;
         this->points += 2;
     }
 }
 void Player::loseLongestPath(){
     if(this->isLongestPath){
-        this->isLongestPath == false;
+        this->isLongestPath = false;
         this->points -= 2;
     }
 }
@@ -179,34 +169,56 @@ vector<Settlment> Player::getSettlments() const{
 
 
 string Player::toString() const{
-    string str = "Player " + this->name + " :\n";
+    string str = this->getTools();
     str += "Resources :\n";
     for (size_t i = 0; i < this->resources.size(); i++)
     {
         Resource resource(i);
         str += resource.getName() + " : " + to_string(this->resources[i]) + "\n";
     }
-    str += "Settlments :\n";
+    str += "\nPlayer points : " + to_string(this->points) + "\n";
+    
+    return str;
+}
+string Player::viewSettlment(){
+    string str = "Your settelment:\n";
+    int sum = 0;
     for (size_t i = 0; i < this->settlments.size(); i++)
     {   
         if(!this->settlments[i].getIsCity()){
-            str += to_string(i+1) + ": " + this->settlments[i].toString() + "\n";
+            str += to_string(++sum) + ":" + this->settlments[i].toString() + "\n";
         }
     }
-    str += "Cities :\n";
+    return str;
+}
+string Player::getTools()const{
+    string str = "Player " + this->name + " :\n";
+    
+    str += "\nSettlments :\n";
+    int sum = 0;
+    for (size_t i = 0; i < this->settlments.size(); i++)
+    {   
+        if(!this->settlments[i].getIsCity()){
+            str += to_string(i+1) + ":" + this->settlments[i].toString() + "\n";
+        }
+    }
+    str += "\nCities :\n";
+    sum = 0;
     for (size_t i = 0; i < this->settlments.size(); i++)
     {
         if(this->settlments[i].getIsCity()){    
-            str += to_string(i+1) + ": " + this->settlments[i].toString() + "\n";
+            str += to_string(++sum) + ":" + this->settlments[i].toString() + "\n";
         }
     }
-    str += "Paths :\n";
+    str += "\nPaths :\n";
     for (size_t i = 0; i < this->paths.size(); i++)
     {
-        str += to_string(i+1) + " : " + this->paths[i].toString() + "\n";
+        str += to_string(i+1) + ":" + this->paths[i].toString() + "\n";
     }
-    str += "Player points : " + to_string(this->points) + "\n";
+    if(this->isLongestPath){
+        str += this->name + " has the longest path\n";
+    }
+
     
     return str;
-    
 }

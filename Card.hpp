@@ -8,7 +8,7 @@ using namespace std;
 namespace ariel{
     class Card {
         private:
-            int color;
+            int type;
         public:
             Card() : color(0){} 
             Card(const int& color) : color(color){}
