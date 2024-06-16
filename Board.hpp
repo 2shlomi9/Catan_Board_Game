@@ -20,7 +20,7 @@ namespace ariel{
             void randomNumbers();
             string toString() const;
             int getThiefPosition() const;
-            void moveThief(const int position);
+            bool moveThief(const int position);
             bool isTwoTilesNeighbors(const int t1,const int t2) const;
             bool isThreeTilesNeighbors(const int t1,const int t2,const int t3) const;
 

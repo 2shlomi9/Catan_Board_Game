@@ -145,19 +145,20 @@ int Board::getThiefPosition() const{
     }
     return NUMBER_OF_TILES;
 }
-void Board::moveThief(const int position){
-if (this->tiles[static_cast<size_t>(position)].getType() == -2) {
-    try {
-        throw std::invalid_argument("Can't move the thief to the sea!");
-    } catch (const std::invalid_argument& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+bool Board::moveThief(const int position){
+    if (this->tiles[static_cast<size_t>(position)].getType() == -2) {
+        try {
+            throw std::invalid_argument("Can't move the thief to the sea!");
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
 
-    return; 
-}
+        return false; 
+    }
 
     this->tiles[static_cast<size_t>(this->getThiefPosition())].turnOn();
     this->tiles[static_cast<size_t>(position)].turnOff();
+    return true;
 }
 
 bool Board::isTwoTilesNeighbors(const int t1,const int t2) const{

@@ -1,25 +1,21 @@
 #pragma once
 #include <iostream>
 #include <string>
-
+#include <list>
 
 using namespace std;
 
 namespace ariel{
-    
-    class Resource{
-
+    class DevelopCard {
         private:
             int type;
-
         public:
-            Resource(const int type) : type(type){}
-            Resource() : type(-1){}
-
+            DevelopCard() : type(-1){} 
+            DevelopCard(const int& type) : type(type){}
             int getType() const;
 
             void setType(const int& type);
             
-            string getName() const;
+            virtual string getName() const;
     };
 }

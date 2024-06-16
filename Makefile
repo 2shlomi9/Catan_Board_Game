@@ -8,10 +8,10 @@ CXXFLAGS = -std=c++2a -Werror -Wsign-conversion
 OUTPUT = a.out
 
 # Define object files
-OBJECTS = Board.o Tile.o Resource.o  Player.o  Catan.o Tool.o    
+OBJECTS = Board.o Tile.o Resource.o  Player.o  Catan.o Tool.o  DevelopCard.o
 
 # Define header files for your project
-HEADERS = Board.hpp Card.hpp Tile.hpp Resource.hpp Player.hpp  Catan.hpp Tool.hpp
+HEADERS = Board.hpp DevelopCard.hpp Tile.hpp Resource.hpp Player.hpp  Catan.hpp Tool.hpp
 
 # Rule to build the final executable
 $(OUTPUT): $(OBJECTS)

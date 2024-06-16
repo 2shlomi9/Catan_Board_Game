@@ -68,6 +68,42 @@ bool Catan::addPath(int player, Path path){
     return true;
 }
 
+int Catan::addDevelopmentCard(int player){
+    srand(time(nullptr));
+    if(!this->players[static_cast<size_t>(player)].buyDevelopmentCard()){
+        return -1;
+    }
+    int sum = 0;
+    int rnd;
+    for (size_t i = 0; i < this->cards.size(); i++)
+    {
+        sum+=this->cards[i];
+    }
+    if(sum == 0){
+        cout<<"No more Develpoment cards"<<endl;
+        return -1;
+    }
+    rnd = rand() % sum;
+    int choose = -1;
+    for (size_t i = 0; i < this->cards.size(); i++)
+    {
+        for (size_t j = 0; j <static_cast<size_t>(this->cards[i]); j++){
+           
+            if(rnd-- == 0){
+                choose = i;
+                break;
+            }
+        }
+    }
+    if(choose < this->cards.size() && choose>=0){
+        this->cards[static_cast<size_t>(choose)]--;
+        this->players[static_cast<size_t>(player)].addDevelopmentCard(choose);
+        cout<<this->players[static_cast<size_t>(player)].getName() + " got a " + DevelopCard(choose).getName() <<endl;
+    }
+    return choose;
+
+}
+
 bool Catan::addSettlment(int player, Settlment settlment){
     vector<int> tiles = settlment.getTiles(); 
     if(!this->isAvaliableForSettlment(tiles[0], tiles[1], tiles[2])){
@@ -354,6 +390,7 @@ string Catan::getAllTools()const{
     }
     return str;
 }
+
 int Catan::findLongestPath(size_t player) const{
 
     if (this->players[player].getPaths().empty()) {
@@ -377,12 +414,39 @@ int Catan::findLongestPath(size_t player) const{
 
     return maxLength;
 }
+void Catan::setLargestArmy(){
+
+    int max = this->largestArmy;
+    int index = this->playerLargestArmy;
+    for(size_t i=0; i<this->players.size(); i++){
+        int largestArmy = this->players[i].getArmySize();
+        if(largestArmy > max && largestArmy > 2){
+            max = largestArmy;
+            index = i;
+        }
+    }
+    if(index != this->playerLargestArmy && index != -1){
+        if(this->playerLargestArmy == -1){
+            this->players[static_cast<size_t>(index)].getLargestArmy();
+            cout<<this->players[static_cast<size_t>(index)].getName() + " got the largest army !"<<endl;
+        }
+        else{
+            this->players[static_cast<size_t>(index)].getLargestArmy();
+            cout<<this->players[static_cast<size_t>(index)].getName() + " got the largest army !"<<endl;
+            this->players[static_cast<size_t>(this->playerLongestPath)].loseLargestArmy();
+            cout<<this->players[static_cast<size_t>(this->playerLargestArmy)].getName() + " loose largest army  !"<<endl;
+        }
+    }
+    this->playerLargestArmy = index;
+    this->largestArmy = max;
+
+}
 void Catan::setPlayerLongestPath(){
     int max = this->longestPath;
     int index = this->playerLongestPath;
     for(size_t i=0; i<this->players.size(); i++){
         int longestPath = findLongestPath(i);
-        if(longestPath > max && longestPath > 5){
+        if(longestPath > max && longestPath > 4){
             max = longestPath;
             index = i;
         }
@@ -396,11 +460,13 @@ void Catan::setPlayerLongestPath(){
             this->players[static_cast<size_t>(index)].getLongestPath();
             cout<<this->players[static_cast<size_t>(index)].getName() + " got longest path !"<<endl;
             this->players[static_cast<size_t>(this->playerLongestPath)].loseLongestPath();
-            cout<<this->players[static_cast<size_t>(index)].getName() + " loose longest path !"<<endl;
+            cout<<this->players[static_cast<size_t>(this->playerLongestPath)].getName() + " loose longest path !"<<endl;
         }
     }
     this->playerLongestPath = index;
+    this->longestPath = max;
 }
+
 
 int Catan::rollMenu(size_t player) const{
     
@@ -428,7 +494,7 @@ int Catan::rollMenu(size_t player) const{
         case 3:
             dice = this->players[player].rollDice();
             cout<<"Dices result: "+to_string(dice)<<endl;
-            return dice;            
+            return dice;         
         default:
             cout<<"press number between 1 to 3"<<endl;
             break;
@@ -437,10 +503,185 @@ int Catan::rollMenu(size_t player) const{
     return -1;
 
 }
+void Catan::getResourceFromPlayers(int player,int resource){
+    int sum = 0;
+    int count = 0;
+    
+    for (size_t i = 0; i < players.size(); i++)
+    {
+        count = 0;
+        if(i != static_cast<size_t>(player)){
+            sum += this->players[static_cast<size_t>(i)].getNumOfResource(resource);
+            count = this->players[static_cast<size_t>(i)].getNumOfResource(resource);
+            while(count){
+                this->players[static_cast<size_t>(i)].removeResource(resource);
+                count--;
+            }
+            
+        }
+    }
+    for(int i=0; i<sum; i++){
+        this->players[static_cast<size_t>(player)].addResource(resource);
+    }
+    Resource r(resource);
+    cout<<"You got " + to_string(sum)+ " "+r.getName()<<endl;
+    
+}
+void Catan::useDevelopmentCard(int player, int card){
+    int choose;
+    if(this->players[static_cast<size_t>(player)].implementCard(card)){
+        switch (card)
+        {
+        case 0:
+            cout<<"You got 1 more knight !!\n";
+            this->thiefAction();
+            this->setLargestArmy();
+            break;
+        case 1:
+            cout<<"You got 1 victory point !!\n";
+            break;
+        case 2:
+            cout<<"Monopoly card !! \n";
+            cout<<"Choose resource (by index) :\n";
+            for(size_t i = 0; i < 5; i++){
+                cout<<to_string(i+1) +". "+Resource(i).getName()<<endl;
+            }
+            choose = -1;
+                
+            while(choose < 1 || choose > 5){
+                cin>>choose;
+            }
+            getResourceFromPlayers(player,choose-1);
 
+            break;
+        case 3:
+            
+            cout<<"Build two paths: \n";
+            while(!this->buildPath(static_cast<size_t>(player))){}
+            cout<<"Build the second path: !!\n";
+            while(!this->buildPath(static_cast<size_t>(player))){}
+            break;
+        case 4:
+            cout<<"year of plenty card :\n";
+            cout<<"Choose two resources (by index) :\n";
+            for(size_t i = 0; i < 5; i++){
+                cout<<to_string(i+1) +". "+Resource(i).getName()<<endl;
+            }
+            
+            for (size_t i = 0; i < 2; i++)
+            {
+                choose = -1;
+                if(i == 0){            // monopoly
+
+                    cout<<"Choose the first resource" << endl;
+                }
+                else{
+                    cout<<"Choose the second resource" << endl;
+                }
+                while(choose < 1 || choose > 5){
+                    cin>>choose;
+            
+                }
+                this->players[static_cast<size_t>(player)].addResource(choose-1);
+                Resource(choose-1).getName();
+                cout<<"You got 1 "+Resource(choose-1).getName()<< endl;
+            }
+            
+            break;
+        
+        default:
+            break;
+        }
+    }
+}
+bool Catan::buildPath(size_t player){
+    cout<<"choose where to build the path:(choose 2 tiles)"<<endl;
+    int p1, p2;
+    cin>>p1>>p2;
+    Path path(p1,p2);
+    bool flag = false;
+    for(size_t i = 0; i< this->players[player].getSettlments().size(); i++){
+        if(isPathConnectToSettlment(path,this->players[player].getSettlments()[i]) && this->players[player].buyPath()){
+            this->addPath(static_cast<int>(player),path);
+            flag = true;
+            break;
+        }
+    } 
+    if(!flag){
+        for(size_t i = 0; i< this->players[player].getPaths().size(); i++){
+            if(isPathConnectToPath(this->players[player].getPaths()[i],path) && this->players[player].buyPath()){
+                this->addPath(static_cast<int>(player),path);
+                flag = true;
+                break;
+            }
+        }
+    }
+
+    if(!flag){
+        try
+        {
+            throw std::invalid_argument("There isn't a settlment or path to connect to this path\n");
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }            
+    }
+    return flag;
+}
+void Catan::removeHalfOfResources(){
+    int sum = 0;
+    int half = 0;
+    for (size_t i = 0; i < this->players.size(); i++)
+    {
+        sum = 0;
+        for(int j=0; j<5; j++){
+            sum+=this->players[i].getNumOfResource(j);
+        }
+        if(sum>7){
+            int choose;
+            half = sum/2;
+            
+            choose = -1;
+            while(half){   
+                cout<<this->players[i].getName() +", choose "+to_string(half) +" resources to remove (by index):"<<endl;
+                for(size_t j = 0; j < 5; j++){
+                    cout<<to_string(j+1) +". "+Resource(static_cast<int>(j)).getName() +" ("+to_string(this->players[i].getNumOfResource(j))+")"<<endl;
+                } 
+                while(choose < 1 || choose > 5){
+                    cin>>choose;
+                }
+                if(this->players[i].removeResource(choose-1)){
+                    half--;
+                    cout<<this->players[i].getName() +", remove "+Resource(choose-1).getName()<<endl;
+                }
+                choose = -1;
+            }
+            cout<<this->players[i].getName() +", Finish !! "<<endl;
+
+        }
+        
+    }
+    
+
+
+}
+void Catan::thiefAction(){
+    cout<<"Choose tile (by index) for moving the thief"<<endl;
+    int choose = -1; 
+    while(choose < 0||choose  > 36){
+        cin>>choose;
+        if(choose < 0||choose  > 36){
+            cout<<"Choose tile (by index) for moving the thief"<<endl;
+        }
+        else if(this->board.moveThief(choose)){
+            break;
+        }
+        choose = -1;
+    }
+    
+}
 size_t Catan::actionMenu(size_t player) {
     int choose = -1; 
-    while(choose != 6){
+    while(choose != 9){
         cout<<this->players[player].getName() + " turn: "<<endl;
         cout<< "Menu:" <<endl; 
         cout<<"View the board-press 1"<<endl;
@@ -449,8 +690,9 @@ size_t Catan::actionMenu(size_t player) {
         cout<<"Build settlement-press 4"<<endl;
         cout<<"Build City-press 5"<<endl;
         cout<<"Buy Development card-press 6"<<endl;
-        cout<<"Trade-press 7"<<endl;
-        cout<<"Finish turn-press 8"<<endl;
+        cout<<"Use Development card-press 7"<<endl;
+        cout<<"Trade-press 8"<<endl;
+        cout<<"Finish turn-press 9"<<endl;
         cin>>choose; 
         if(choose == 1){
             cout<<this->board.toString()<<endl;
@@ -460,36 +702,7 @@ size_t Catan::actionMenu(size_t player) {
             cout<<this->players[player].toString();
         }
         else if(choose== 3){
-            cout<<"choose where to build the path:(choose 2 tiles)"<<endl;
-            int p1, p2;
-            cin>>p1>>p2;
-            Path path(p1,p2);
-            bool flag = false;
-            for(size_t i = 0; i< this->players[player].getSettlments().size(); i++){
-                if(isPathConnectToSettlment(path,this->players[player].getSettlments()[i])){
-                    this->addPath(static_cast<int>(player),path);
-                    flag = true;
-                    break;
-                }
-            } 
-            if(!flag){
-                for(size_t i = 0; i< this->players[player].getPaths().size(); i++){
-                    if(isPathConnectToPath(this->players[player].getPaths()[i],path)){
-                        this->addPath(static_cast<int>(player),path);
-                        flag = true;
-                        break;
-                    }
-                }
-            }
-
-            if(!flag){
-                try
-                {
-                    throw std::invalid_argument("There isn't a settlment or path to connect to this path\n");
-                } catch (const std::invalid_argument& e) {
-                    std::cerr << "Error: " << e.what() << std::endl;
-                }            
-            }
+            this->buildPath(player);
 
         }  
         else if(choose == 4){
@@ -499,7 +712,7 @@ size_t Catan::actionMenu(size_t player) {
             Settlment settlment(t1,t2,t3);
             bool flag = false;
             for(size_t i = 0; i< this->players[player].getPaths().size(); i++){
-                if(isPathConnectToSettlment(this->players[player].getPaths()[i],settlment)){
+                if(isPathConnectToSettlment(this->players[player].getPaths()[i],settlment) && this->players[player].buySettlment()){
                     this->addSettlment(static_cast<int>(player),settlment);
                     flag = true;
                     break;
@@ -533,12 +746,20 @@ size_t Catan::actionMenu(size_t player) {
             this->players[player].upgrateToCity(settlmentIndex-1);
         }
         else if(choose == 6){
-
+            this->addDevelopmentCard(player);
         }
         else if(choose == 7){
-            
+            cout<<"Choose development card you want to use (by index)"<<endl;
+            cout<<this->players[player].viewDevelopmentCard()<<endl;
+            int choose;
+            cin>>choose;
+            this->useDevelopmentCard(player, choose-1);
+    
         }
         else if(choose == 8){
+            this->sendTrade(player);
+        }
+        else if(choose == 9){
             return 0;
         }
         else{
@@ -552,6 +773,75 @@ size_t Catan::actionMenu(size_t player) {
     return 0;
 
 }
+bool Catan::trade(int give, int take, size_t player1, size_t player2){
+    if(!this->players[player1].getNumOfResource(give)){
+        cout<<this->players[player1].getName()+" doesnt has "+Resource(give).getName()<<endl;
+        return false;
+    }
+    if(!this->players[player2].getNumOfResource(take)){
+        cout<<this->players[player2].getName()+" doesnt has "+Resource(take).getName()<<endl;
+        return false;
+    }
+    this->players[player1].addResource(take);
+    this->players[player2].addResource(give);
+    this->players[player1].removeResource(give);
+    this->players[player2].removeResource(take);
+    cout<<"Trade succeed !"<<endl;
+    return true;
+
+}
+void Catan::sendTrade(size_t player){
+    int choose1 = -1;
+    int choose2 = -1;
+
+    cout<<this->players[player].getName() +", for this resources :"<<endl;
+    for(size_t j = 0; j < 5; j++){
+        cout<<to_string(j+1) +". "+Resource(static_cast<int>(j)).getName() +" ("+to_string(this->players[player].getNumOfResource(j))+")"<<endl;
+    } 
+    cout<<"Choose the resource you want to give :" << endl;
+    while(choose1 < 1 || choose1 > 5){
+        cin>>choose1;
+        if(!this->players[player].getNumOfResource(choose1-1)){
+            cout<<this->players[player].getName()+" doesnt has "+Resource(choose1-1).getName()<<endl;
+            return;
+        }
+    }
+    
+
+    cout<<"Choose the resource you want to take :" << endl;
+    while(choose2 < 1 || choose2 > 5){
+    cin>>choose2;
+    }
+    bool flag = false;
+    
+    for (size_t i = 0; i < this->players.size(); i++)
+    {
+        char choose = 'N';
+        if(i!=player){
+            cout<<this->players[i].getName()+", "+this->players[player].getName()+" want to trade :";
+            cout<<" give - "+Resource(static_cast<int>(choose2-1)).getName() +", take - "+Resource(static_cast<int>(choose1-1)).getName()<<endl;
+            cout<<"Accept ? press Y\nIgonre ? any input"<<endl;
+            cin>>choose;
+            if (choose == 'Y')
+            {
+                cout<<this->players[i].getName() +", for this resources :"<<endl;
+                for(size_t j = 0; j < 5; j++){
+                    cout<<to_string(j+1) +". "+Resource(static_cast<int>(j)).getName() +" ("+to_string(this->players[i].getNumOfResource(j))+")"<<endl;
+                } 
+                if(this->trade(choose1-1, choose2-1, player, i)){
+                    flag = true;
+                    break;
+                }
+            }
+            
+        } 
+    }
+    if(!flag){
+        cout<<"Trade unaccepted"<<endl;
+    }
+
+}
+
 void Catan::getResource(const int diceNumber){
 
     for (size_t i = 0; i < this->players.size(); i++){
@@ -580,8 +870,12 @@ void Catan::playGame(){
         for (size_t i = 0; i < this->players.size(); i++)
         {
             rollDices = rollMenu(i);
-            getResource(rollDices);
-            victory = actionMenu(i);
+            if(rollDices == 7){
+                this->thiefAction();
+                this->removeHalfOfResources();
+            }
+            this->getResource(rollDices);
+            victory = this->actionMenu(i);
             if(victory > 0) {
                 break;
             }
@@ -589,4 +883,10 @@ void Catan::playGame(){
         }
     }
     cout<<"Player "+this->players[victory-1].getName()+" has won !!!!!"<<endl;
+}
+
+void Catan::runGame(){
+
+    this->startGame();
+    this->playGame();
 }

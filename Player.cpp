@@ -97,10 +97,37 @@ void Player::changeName(string name){
 string Player::getName() const{
     return this->name;
 }
+int Player::getArmySize() const{
+    return this->armySize;
+}
 void Player::addResource(const int resource){
 
     if(resource >= 0 && resource < 5){
         this->resources[static_cast<size_t>(resource)]++;
+    }
+}
+
+int Player::getNumOfResource(const int resource){
+    
+    if(resource >= 0 && resource < 5){
+        return this->resources[static_cast<size_t>(resource)];
+    }
+    return 0;
+}
+bool Player::removeResource(const int resource){
+    
+    if(resource >= 0 && resource < 5){
+        if(this->resources[static_cast<size_t>(resource)]){
+            this->resources[static_cast<size_t>(resource)]--;
+            return true;
+        }
+    }
+    return false;
+}
+void Player::addDevelopmentCard(const int card){
+
+    if(card >= 0 && card < 5){
+        this->cards[static_cast<size_t>(card)]++;
     }
 }
 bool Player::upgrateToCity(int settlment){
@@ -134,7 +161,43 @@ bool Player::upgrateToCity(int settlment){
     return false;
 
 }
+bool Player::implementCard(int card){
+    if(this->cards.size()-1 < card || card < 0){
+        try
+        {
+            throw std::invalid_argument("Inviled argument\n");
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        return false;
 
+    }
+
+    if(this->cards[static_cast<size_t>(card)]>0){
+        this->cards[static_cast<size_t>(card)] --;
+        if(card == 0){
+            this->implementedCards[static_cast<size_t>(card)]++;
+            this->armySize++;
+        }
+        else if(card == 1){
+            this->implementedCards[static_cast<size_t>(card)]++;
+            this->points ++;
+        }
+        return true;
+    }
+    try
+    {
+        throw std::invalid_argument("You haven't any "+DevelopCard(card).getName()+"\n");
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    return false;
+
+}
 void Player::getLargestArmy(){
     if(!this->isLargestArmy){
         this->isLargestArmy = true;
@@ -170,15 +233,34 @@ vector<Settlment> Player::getSettlments() const{
 
 string Player::toString() const{
     string str = this->getTools();
-    str += "Resources :\n";
+    str += "\nResources :\n";
     for (size_t i = 0; i < this->resources.size(); i++)
     {
         Resource resource(i);
         str += resource.getName() + " : " + to_string(this->resources[i]) + "\n";
     }
+    str += "\nDevelopment cards :\n";
+    for (size_t i = 0; i < this->cards.size(); i++)
+    {
+        if(this->cards[i] > 0){
+            DevelopCard card(i);
+            str += card.getName() + " : " + to_string(this->cards[i]) + "\n";
+        }
+    }
+    str += "\nImplemented development cards :\n";
+    for (size_t i = 0; i < this->cards.size(); i++)
+    {
+        if(this->implementedCards[i] > 0){
+            DevelopCard card(i);
+            str += card.getName() + " : " + to_string(this->implementedCards[i]) + "\n";
+        }
+    }
     str += "\nPlayer points : " + to_string(this->points) + "\n";
     
     return str;
+}
+vector<int> Player::getCards() const{
+    return this->cards;
 }
 string Player::viewSettlment(){
     string str = "Your settelment:\n";
@@ -188,6 +270,14 @@ string Player::viewSettlment(){
         if(!this->settlments[i].getIsCity()){
             str += to_string(++sum) + ":" + this->settlments[i].toString() + "\n";
         }
+    }
+    return str;
+}
+string Player::viewDevelopmentCard(){
+    string str = "Your Development cards:\n";
+    for (size_t i = 0; i < this->cards.size(); i++)
+    {   
+        str += to_string(i+1) + ". " + DevelopCard(i).getName() + ":" + to_string(this->cards[i]) +"\n";     
     }
     return str;
 }
@@ -218,7 +308,8 @@ string Player::getTools()const{
     if(this->isLongestPath){
         str += this->name + " has the longest path\n";
     }
-
-    
+    if(this->isLargestArmy){
+        str += this->name + " has the largest army\n";
+    }
     return str;
 }
