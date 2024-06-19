@@ -15,6 +15,64 @@
 using namespace std;
 using namespace ariel;
 
+// ---------------- : Tiles functions : ----------------
+
+// ------ getTiles function ------
+/**
+ * @brief This function gets the list of tiles on the board.
+ * @return A constant reference to the vector of tiles.
+ */
+const vector<Tile>& Board::getTiles() const {
+    return tiles;
+}
+
+// ------ isTwoTilesNeighbors function ------
+/**
+ * @brief This function checks if two tiles are neighbors.
+ * @param t1: The index of the first tile.
+ * @param t2: The index of the second tile.
+ * @return true if the tiles are neighbors, false otherwise.
+ */
+bool Board::isTwoTilesNeighbors(const int t1,const int t2) const{
+    int x1,y1,z1;
+    int x2,y2,z2;
+    x1 = this->tiles[static_cast<size_t>(t1)].getPosition()[0];
+    y1 = this->tiles[static_cast<size_t>(t1)].getPosition()[1];
+    z1 = this->tiles[static_cast<size_t>(t1)].getPosition()[2];
+    x2 = this->tiles[static_cast<size_t>(t2)].getPosition()[0];
+    y2 = this->tiles[static_cast<size_t>(t2)].getPosition()[1];
+    z2 = this->tiles[static_cast<size_t>(t2)].getPosition()[2];
+
+    if(x1==x2){
+        if(abs(y1-y2) == 1 && abs(z1-z2) == 1) return true;
+    }
+    if(y1==y2){
+        if(abs(x1-x2) == 1 && abs(z1-z2) == 1) return true;
+    }
+    if(z1==z2){
+        if(abs(x1-x2) == 1 && abs(y1-y2) == 1) return true;
+    }
+    return false;
+}
+
+// ------ isThreeTilesNeighbors function ------
+/**
+ * @brief This function checks if three tiles are neighbors.
+ * @param t1: The index of the first tile.
+ * @param t2: The index of the second tile.
+ * @param t3: The index of the third tile.
+ * @return true if the tiles are neighbors, false otherwise.
+ */
+bool Board::isThreeTilesNeighbors(const int t1,const int t2,const int t3) const{
+    if(this->isTwoTilesNeighbors(t1,t2) && this->isTwoTilesNeighbors(t2,t3) && this->isTwoTilesNeighbors(t1,t3)){
+        return true;
+    }
+    return false;
+}
+// ------ randomTypes function ------
+/**
+ * @brief This function randomly assigns types to the tiles on the board.
+ */
 void Board::randomTypes(){
     srand(time(nullptr));
 
@@ -80,6 +138,11 @@ void Board::randomTypes(){
         this->tiles[static_cast<size_t>(rnd)].setType(4);
     }
 }
+
+// ------ randomNumbers function ------
+/**
+ * @brief This function randomly assigns numbers to the tiles on the board.
+ */
 void Board::randomNumbers(){
 
     int rnd;
@@ -105,6 +168,49 @@ void Board::randomNumbers(){
     }
 }
 
+// ---------------- : Thief functions : ----------------
+
+// ------ getThiefPosition function ------
+/**
+ * @brief This function gets the position of the thief on the board.
+ * @return The index of the tile containing the thief.
+ */
+int Board::getThiefPosition() const{
+    for(size_t i=0; i<NUMBER_OF_TILES; i++){
+        if(this-> tiles[i].isContainsThief()){
+            return i;
+        }
+    }
+    return NUMBER_OF_TILES;
+}
+// ------ moveThief function ------
+/**
+ * @brief This function moves the thief from one tile to another.
+ * @param position: The index of the tile to move the thief to.
+ * @return true if the thief is moved successfully, false otherwise.
+ */
+bool Board::moveThief(const int position){
+    if (this->tiles[static_cast<size_t>(position)].getType() == -2) {
+        try {
+            throw std::invalid_argument("Can't move the thief to the sea!");
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+
+        return false; 
+    }
+
+    this->tiles[static_cast<size_t>(this->getThiefPosition())].turnOn();
+    this->tiles[static_cast<size_t>(position)].turnOff();
+    return true;
+}
+
+// ---------------- : Board functions : ----------------
+
+// ------ initializeBoard function ------
+/**
+ * @brief This function initializes the board with tiles.
+ */
 void Board::initializeBoard() {
     this->clearBoard();
     for(int i=0; i<4; i++){
@@ -133,63 +239,19 @@ void Board::initializeBoard() {
 
 }
 
-
-const vector<Tile>& Board::getTiles() const {
-    return tiles;
-}
-int Board::getThiefPosition() const{
-    for(size_t i=0; i<NUMBER_OF_TILES; i++){
-        if(this-> tiles[i].isContainsThief()){
-            return i;
-        }
-    }
-    return NUMBER_OF_TILES;
-}
-bool Board::moveThief(const int position){
-    if (this->tiles[static_cast<size_t>(position)].getType() == -2) {
-        try {
-            throw std::invalid_argument("Can't move the thief to the sea!");
-        } catch (const std::invalid_argument& e) {
-            std::cerr << "Error: " << e.what() << std::endl;
-        }
-
-        return false; 
-    }
-
-    this->tiles[static_cast<size_t>(this->getThiefPosition())].turnOn();
-    this->tiles[static_cast<size_t>(position)].turnOff();
-    return true;
+// ------ clearBoard function ------
+/**
+ * @brief This function clears the board.
+ */
+void Board::clearBoard(){
+    this->tiles.clear();
 }
 
-bool Board::isTwoTilesNeighbors(const int t1,const int t2) const{
-    int x1,y1,z1;
-    int x2,y2,z2;
-    x1 = this->tiles[static_cast<size_t>(t1)].getPosition()[0];
-    y1 = this->tiles[static_cast<size_t>(t1)].getPosition()[1];
-    z1 = this->tiles[static_cast<size_t>(t1)].getPosition()[2];
-    x2 = this->tiles[static_cast<size_t>(t2)].getPosition()[0];
-    y2 = this->tiles[static_cast<size_t>(t2)].getPosition()[1];
-    z2 = this->tiles[static_cast<size_t>(t2)].getPosition()[2];
-
-    if(x1==x2){
-        if(abs(y1-y2) == 1 && abs(z1-z2) == 1) return true;
-    }
-    if(y1==y2){
-        if(abs(x1-x2) == 1 && abs(z1-z2) == 1) return true;
-    }
-    if(z1==z2){
-        if(abs(x1-x2) == 1 && abs(y1-y2) == 1) return true;
-    }
-    return false;
-}
-bool Board::isThreeTilesNeighbors(const int t1,const int t2,const int t3) const{
-    if(this->isTwoTilesNeighbors(t1,t2) && this->isTwoTilesNeighbors(t2,t3) && this->isTwoTilesNeighbors(t1,t3)){
-        return true;
-    }
-    return false;
-}
-
-
+// ------ toString function ------
+/**
+ * @brief This function returns a string representation of the board.
+ * @return A string representing the board with tiles in order.
+ */
 string Board::toString()const{
     string str = "The board :\n";
 
@@ -203,9 +265,6 @@ string Board::toString()const{
     str += "thief location: "+ this->tiles[static_cast<size_t>(this->getThiefPosition())].toString()+"\n";
     return str;
     
-}
-void Board::clearBoard(){
-    this->tiles.clear();
 }
 
 

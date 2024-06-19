@@ -6,11 +6,20 @@
 using namespace std;
 using namespace ariel;
 
-
+// ------ getType function ------
+/**
+ * @brief This function returns the type of the resource.
+ * @return The type of the resource.
+ */
 int Resource :: getType() const{
     return this->type;
 }
 
+// ------ getName function ------
+/**
+ * @brief This function returns the name of the resource as a string.
+ * @return The name of the resource.
+ */
 string Resource :: getName() const{
 
     switch(this->type){
@@ -32,6 +41,11 @@ string Resource :: getName() const{
     }
 }
 
+// ------ setType function ------
+/**
+ * @brief This function sets the type of the resource.
+ * @param type: The type to set for the resource.
+ */
 void Resource :: setType(const int& type){
     if(type < 1 || type > 5){
         return;

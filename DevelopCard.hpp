@@ -8,14 +8,17 @@ using namespace std;
 namespace ariel{
     class DevelopCard {
         private:
-            int type;
+            int type; // type of the card
         public:
+        // ---------------- : Constructors : ----------------
             DevelopCard() : type(-1){} 
             DevelopCard(const int& type) : type(type){}
-            int getType() const;
-
-            void setType(const int& type);
+        // ---------------- : Functions : ----------------
             
-            virtual string getName() const;
+            int getType() const; // get type of the card
+
+            void setType(const int& type); // set type for the card
+            
+            virtual string getName() const; // return the name of the card(string)
     };
 }

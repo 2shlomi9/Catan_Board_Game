@@ -10,16 +10,18 @@ namespace ariel{
     class Resource{
 
         private:
-            int type;
+            int type; // resource type 
 
         public:
+        // ---------------- : Constructors : ----------------
             Resource(const int type) : type(type){}
             Resource() : type(-1){}
 
-            int getType() const;
+        // ---------------- : Functions : ----------------
+            int getType() const; // return the type of the resource
 
-            void setType(const int& type);
+            void setType(const int& type); // set type for the resource
             
-            string getName() const;
+            string getName() const; // return the of the resource
     };
 }
