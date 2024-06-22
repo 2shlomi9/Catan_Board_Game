@@ -523,6 +523,7 @@ void Catan::getResource(const int diceNumber){
             for (size_t k = 0; k < 3; k++)
             {
                 size_t tileNumber = static_cast<size_t>(this->players[i].getSettlments()[j].getTiles()[k]);
+
                 if(this->board.getTiles()[tileNumber].getNumber() == diceNumber){
                     this->players[i].addResource(this->board.getTiles()[tileNumber].createResource().getType());
                     if(this->players[i].getSettlments()[j].getIsCity()){
@@ -982,6 +983,13 @@ size_t Catan::actionMenu(size_t player) {
     return 0;
 
 }
+// ------ setBoard function ------
+/**
+ * @brief This function set initializing the board(Use for test).
+ */
+void Catan::setBoard(Board board){
+    this->board = board;
+}
 
 // ------ startGame function ------
 /**
@@ -1055,7 +1063,7 @@ void Catan::startGame(){
             flag = this->addSettlment(i,settlment);
         }
         while(!flag || !isConnected){
-            cout<<"Player "+this->players[static_cast<size_t>(i)].getName() + ": locate the first path (choose 2 tiles by id)"<<endl;
+            cout<<"Player "+this->players[static_cast<size_t>(i)].getName() + ": locate the second path (choose 2 tiles by id)"<<endl;
             cin>>p1>>p2;
             Path path(p1,p2);
             Settlment settlment(t1,t2,t3);

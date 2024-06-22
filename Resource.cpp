@@ -47,7 +47,7 @@ string Resource :: getName() const{
  * @param type: The type to set for the resource.
  */
 void Resource :: setType(const int& type){
-    if(type < 1 || type > 5){
+    if(type < 0 || type > 5){
         return;
     }
     this->type = type;

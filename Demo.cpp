@@ -22,7 +22,7 @@ int main(){
         p1.addResource(3);
         p1.addResource(4);
     }
-
+    p2.addDevelopmentCard(2);
     catan.addPlayer(p1);
     catan.addPlayer(p2);
     catan.runGame();

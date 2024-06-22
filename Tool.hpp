@@ -14,6 +14,8 @@ namespace ariel{
         public:
         // ---------------- : Constructors : ----------------
             Tool(const int points, const vector<int> tiles) : points(points), tiles(tiles){}
+
+        // ---------------- : Functions : ----------------
             const int getPoints(); // return the points of the Tool(settlment 1, city 2)
             vector<int> getTiles() const; // return the tiles of the Tool
             string toString() const; // return string of this tool

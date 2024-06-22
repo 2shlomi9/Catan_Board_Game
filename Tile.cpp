@@ -71,7 +71,7 @@ bool Tile::isContainsThief() const{
  */
 Resource Tile::createResource() const {
 
-    if(!this->isAvaliable || this->type < 1 || this->type > 5) {
+    if(!this->isAvaliable || this->type < 0 || this->type > 5) {
         return Resource();
     }
     return Resource(this->type);

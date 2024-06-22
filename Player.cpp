@@ -89,7 +89,7 @@ vector<Settlment> Player::getSettlments() const{
  * @return true if the player has enough resources to buy the path, false otherwise.
  */
 bool Player::buyPath(){
-    // Wood-0, Brick-1 needed
+    // 1:Wood(type = 0) , 1:Brick(type = 1) needed
     if(this->resources[0] < 1 || this->resources[1] < 1){
         try {
             throw std::invalid_argument("user : "+this->name +" doesn't have enough resources to buld a path\n" );

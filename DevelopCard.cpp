@@ -21,7 +21,7 @@ int DevelopCard :: getType() const{
  * @param type: The type to set for the development card.
  */
 void DevelopCard :: setType(const int& type){
-    if(type < 1 || type > 5){
+    if(type < 0 || type > 4){
         return;
     }
     this->type = type;

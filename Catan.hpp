@@ -56,11 +56,9 @@ namespace ariel{
             void removeHalfOfResources(); // Get half of resources from all the players with more then 7 resources(Dices = 7)
             void getResource(const int diceNumber); // All players get resources from tiles they own with same number of the dices result
 
-
             // ------ Development Card functions ------
             int addDevelopmentCard(int player); // Add development card for player (player buy development card)
             void useDevelopmentCard(int player, int card); // Player use development card
-
 
             // ------ Longest path & Largest army functions ------
             int findLongestPath(size_t player) const; // Find the size of longest path of player  
@@ -81,7 +79,7 @@ namespace ariel{
             // ----- Game & Board functions ------
             int rollMenu(size_t player) const; // Menu before rolling the dices for more options(view board, view player game data)
             size_t actionMenu(size_t player); // Menu after rolling the dices for player actions
-            
+            void setBoard(Board board);
             string getAllTools()const; // Return all the tools on the board
 
             void startGame(); // Start game (each player put two settlments and two paths);
