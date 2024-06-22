@@ -72,11 +72,11 @@ else, each player with tiles with the number like the dices result, get resource
 - Press "6" - buy development card (1 wool & 1 oats & 1 iron needed)
 
 - Press "7" - use development card , A menu with player development cards open after press 7 to use a development card :
- - press 1 (knight card): move the thief, the player with most knight card get the largest army(2 more points) after more then 3 knight card.
- - press 2 (victory point): the player get one more victory point
- - press 3 (monopoly card):the player choose which resource to take from all players, the players must give all the resources of this type of resource to the player that use monoply card  
- - press 4 (build path): the player can build two paths for free
- - press 5 (year of plenty): the player get to choose 2 resources for free 
+  -press 1 (knight card): move the thief, the player with most knight card get the largest army(2 more points) after more then 3 knight card.
+  -press 2 (victory point): the player get one more victory point
+  -press 3 (monopoly card):the player choose which resource to take from all players, the players must give all the resources of this type of -resource to the player that use monoply card  
+  -press 4 (build path): the player can build two paths for free
+  -press 5 (year of plenty): the player get to choose 2 resources for free 
 
 - Press "8" - trade, A menu with player resources open after press 8 to use trade :
 player that want to trade choose resource (by index 1...5) to give and choose resource to take , after all the player ask if they want to trade.
