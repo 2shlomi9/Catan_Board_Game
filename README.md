@@ -84,7 +84,7 @@ player that want to trade choose resource (by index 1...5) to give and choose re
 - Press "9" - pass the turn
 
 #### Points
- - Largest path : the player with the longest path(count from 5+) get 2 victory points
+ - Longest path : the player with the longest path(count from 5+) get 2 victory points
  - Largest army : the player with largest army(count from 3+) get 2 victory points
  - Build settlement : the plsyer get 1 victory point for each settlement
  - Build city : the player get 1 victory point for each city
