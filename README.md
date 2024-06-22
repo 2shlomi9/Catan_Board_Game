@@ -46,42 +46,42 @@ After run the game, press "Y" if this is the board that you want, else press "N"
 
 #### Choose the first two settlements position & two paths position
 The players order is randomly, player choose the first settlment - "x" "y" "z" that represent the ID (index of tiles), this tiles need to be connected. 
-After the player choose settlement is need to choose the first path - "x" "y" that represent the ID (index of tiles), this two tiles can't be both sea and must connected to settlment of this player. 
+After the player choose settlement is need to choose the first path - "x" "y" that represent the ID (index of tiles),this tiles need to be connectd, can't be both sea and must connected to settlment of this player. 
 
 player choose the second settlment - "x" "y" "z" that represent the ID (index of tiles), this tiles need to be connected. 
-After the player choose settlement is need to choose the second path - "x" "y" that represent the ID (index of tiles), this two tiles can't be both sea and must connected to settlment of this player. 
+After the player choose settlement is need to choose the second path - "x" "y" that represent the ID (index of tiles), this tiles need to be connectd, can't be both sea and must connected to settlment of this player. 
 
 #### Start menu
-Press "1" - view the board
-Press "2" - view player game data (settlement ,resources ,Points and more.....)
-Press "3" - roll dices :
+###### Press "1" - view the board
+###### Press "2" - view player game data (settlement ,resources ,Points and more.....)
+###### Press "3" - roll dices :
 if dices resources is 7, all the player with more then 7 resources need to give half of they resources (A menu with player resources open after if they have more then 7 resources (choose by index 1...5)).
 else, each player with tiles with the number like the dices result, get resources from this tiles
 
 #### Action menu
-Press "1" - view the board
+###### Press "1" - view the board
 
-Press "2" - view player game data (settlement ,resources ,Points.....)
+###### Press "2" - view player game data (settlement ,resources ,Points.....)
 
-Press "3" - build path (1 wood & 1 brick needed)
+###### Press "3" - build path (1 wood & 1 brick needed)
 
-Press "4" - build settlement (1 wood & 1 brick & 1 wool & 1 oats needed)
+###### Press "4" - build settlement (1 wood & 1 brick & 1 wool & 1 oats needed)
 
-Press "5" - build city (2 oats & 3 iron needed), A menu with player settlement open after press 5 to build a city (choose by index)
+###### Press "5" - build city (2 oats & 3 iron needed), A menu with player settlement open after press 5 to build a city (choose by index)
 
-Press "6" - buy development card (1 wool & 1 oats & 1 iron needed)
+###### Press "6" - buy development card (1 wool & 1 oats & 1 iron needed)
 
-Press "7" - use development card , A menu with player development cards open after press 7 to use a development card :
+###### Press "7" - use development card , A menu with player development cards open after press 7 to use a development card :
  - press 1 (knight card): move the thief, the player with most knight card get the largest army(2 more points) after more then 3 knight card.
  - press 2 (victory point): the player get one more victory point
  - press 3 (monopoly card):the player choose which resource to take from all players, the players must give all the resources of this type of resource to the player that use monoply card  
  - press 4 (build path): the player can build two paths for free
  - press 5 (year of plenty): the player get to choose 2 resources for free 
 
-Press "8" - trade, A menu with player resources open after press 8 to use trade :
+###### Press "8" - trade, A menu with player resources open after press 8 to use trade :
 player that want to trade choose resource (by index 1...5) to give and choose resource to take , after all the player ask if they want to trade.
 
-Press "9" - pass the turn
+###### Press "9" - pass the turn
 
 #### Points
  - Largest path : the player with the longest path(count from 5+) get 2 victory points
